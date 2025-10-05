@@ -104,6 +104,7 @@ AyuLinker provides a **FHIR-compliant, automated integration engine** to connect
 
 # 📜 License
 This project is developed for Smart India Hackathon 2025 by Team TECH RIDERS.
+*Note* - We are currently not providing with the datasets of AYUSH and the .env file with ICD-11 credentials in our github, to work with that kindly mail us.
 
 ---
 Innovation Today for a Smarter Tomorrow 🌟.
