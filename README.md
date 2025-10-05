@@ -75,7 +75,7 @@ AyuLinker provides a **FHIR-compliant, automated integration engine** to connect
 #### 4. Start the development server
     npm run dev
     OR node app.js
-#### 5.Server will be available at: http://localhost:25579
+#### 5. Server will be available at: http://localhost:25579
 
 ---
 
@@ -105,4 +105,5 @@ AyuLinker provides a **FHIR-compliant, automated integration engine** to connect
 # 📜 License
 This project is developed for Smart India Hackathon 2025 by Team TECH RIDERS.
 
-    Innovation Today for a Smarter Tomorrow 🌟.
+---
+Innovation Today for a Smarter Tomorrow 🌟.
