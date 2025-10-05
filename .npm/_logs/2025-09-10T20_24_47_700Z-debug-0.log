@@ -1,0 +1,155 @@
+0 verbose cli /usr/local/bin/node /usr/local/bin/npm
+1 info using npm@10.9.3
+2 info using node@v21.7.3
+3 silly config load:file:/usr/local/lib/node_modules/npm/npmrc
+4 silly config load:file:/home/container/.npmrc
+5 silly config load:file:/usr/local/etc/npmrc
+6 verbose title npm install
+7 verbose argv "install"
+8 verbose logfile logs-max:10 dir:/home/container/.npm/_logs/2025-09-10T20_24_47_700Z-
+9 verbose logfile /home/container/.npm/_logs/2025-09-10T20_24_47_700Z-debug-0.log
+10 silly logfile done cleaning log files
+11 silly packumentCache heap:1228144640 maxSize:307036160 maxEntrySize:153518080
+12 silly idealTree buildDeps
+13 verbose shrinkwrap failed to load node_modules/.package-lock.json out of date, updated: node_modules
+14 silly reify moves {}
+15 silly audit bulk request {
+15 silly audit   '@mongodb-js/saslprep': [ '1.3.0' ],
+15 silly audit   '@types/webidl-conversions': [ '7.0.3' ],
+15 silly audit   '@types/whatwg-url': [ '11.0.5' ],
+15 silly audit   accepts: [ '2.0.0' ],
+15 silly audit   async: [ '3.2.6' ],
+15 silly audit   asynckit: [ '0.4.0' ],
+15 silly audit   axios: [ '1.11.0' ],
+15 silly audit   'balanced-match': [ '1.0.2' ],
+15 silly audit   'body-parser': [ '2.2.0' ],
+15 silly audit   'brace-expansion': [ '2.0.2' ],
+15 silly audit   bson: [ '6.10.4' ],
+15 silly audit   bytes: [ '3.1.2' ],
+15 silly audit   'call-bind-apply-helpers': [ '1.0.2' ],
+15 silly audit   'call-bound': [ '1.0.4' ],
+15 silly audit   'combined-stream': [ '1.0.8' ],
+15 silly audit   'content-disposition': [ '1.0.0' ],
+15 silly audit   'content-type': [ '1.0.5' ],
+15 silly audit   cookie: [ '0.7.2' ],
+15 silly audit   'cookie-signature': [ '1.2.2' ],
+15 silly audit   'csv-parser': [ '3.2.0' ],
+15 silly audit   'data-uri-to-buffer': [ '4.0.1' ],
+15 silly audit   debug: [ '4.4.1', '3.1.0' ],
+15 silly audit   'delayed-stream': [ '1.0.0' ],
+15 silly audit   depd: [ '2.0.0' ],
+15 silly audit   dotenv: [ '17.2.2' ],
+15 silly audit   'dunder-proto': [ '1.0.1' ],
+15 silly audit   'ee-first': [ '1.1.1' ],
+15 silly audit   ejs: [ '3.1.10' ],
+15 silly audit   'ejs-mate': [ '4.0.0' ],
+15 silly audit   encodeurl: [ '2.0.0' ],
+15 silly audit   'es-define-property': [ '1.0.1' ],
+15 silly audit   'es-errors': [ '1.3.0' ],
+15 silly audit   'es-object-atoms': [ '1.1.1' ],
+15 silly audit   'es-set-tostringtag': [ '2.1.0' ],
+15 silly audit   'escape-html': [ '1.0.3' ],
+15 silly audit   etag: [ '1.8.1' ],
+15 silly audit   express: [ '5.1.0' ],
+15 silly audit   'fetch-blob': [ '3.2.0' ],
+15 silly audit   filelist: [ '1.0.4' ],
+15 silly audit   finalhandler: [ '2.1.0' ],
+15 silly audit   'follow-redirects': [ '1.15.11' ],
+15 silly audit   'form-data': [ '4.0.4' ],
+15 silly audit   'mime-db': [ '1.52.0', '1.54.0' ],
+15 silly audit   'mime-types': [ '2.1.35', '3.0.1' ],
+15 silly audit   'formdata-polyfill': [ '4.0.10' ],
+15 silly audit   forwarded: [ '0.2.0' ],
+15 silly audit   fresh: [ '2.0.0' ],
+15 silly audit   fs: [ '0.0.1-security' ],
+15 silly audit   'fs-extra': [ '11.3.1' ],
+15 silly audit   'function-bind': [ '1.1.2' ],
+15 silly audit   fuzzball: [ '2.2.3' ],
+15 silly audit   'get-intrinsic': [ '1.3.0' ],
+15 silly audit   'get-proto': [ '1.0.1' ],
+15 silly audit   gopd: [ '1.2.0' ],
+15 silly audit   'graceful-fs': [ '4.2.11' ],
+15 silly audit   gsap: [ '3.13.0' ],
+15 silly audit   'has-symbols': [ '1.1.0' ],
+15 silly audit   'has-tostringtag': [ '1.0.2' ],
+15 silly audit   hasown: [ '2.0.2' ],
+15 silly audit   heap: [ '0.2.7' ],
+15 silly audit   'http-errors': [ '2.0.0' ],
+15 silly audit   statuses: [ '2.0.1', '2.0.2' ],
+15 silly audit   'iconv-lite': [ '0.6.3', '0.7.0' ],
+15 silly audit   inherits: [ '2.0.4', '2.0.3' ],
+15 silly audit   'ipaddr.js': [ '1.9.1' ],
+15 silly audit   'is-promise': [ '4.0.0' ],
+15 silly audit   jake: [ '10.9.4' ],
+15 silly audit   jsonfile: [ '6.2.0' ],
+15 silly audit   kareem: [ '2.6.3' ],
+15 silly audit   lodash: [ '4.17.21' ],
+15 silly audit   'math-intrinsics': [ '1.1.0' ],
+15 silly audit   'media-typer': [ '1.1.0' ],
+15 silly audit   'memory-pager': [ '1.5.0' ],
+15 silly audit   'merge-descriptors': [ '2.0.0' ],
+15 silly audit   'method-override': [ '3.0.0' ],
+15 silly audit   ms: [ '2.0.0', '2.1.3' ],
+15 silly audit   methods: [ '1.1.2' ],
+15 silly audit   minimatch: [ '5.1.6' ],
+15 silly audit   mongodb: [ '6.18.0' ],
+15 silly audit   'mongodb-connection-string-url': [ '3.0.2' ],
+15 silly audit   mongoose: [ '8.18.0' ],
+15 silly audit   mpath: [ '0.9.0' ],
+15 silly audit   mquery: [ '5.0.0' ],
+15 silly audit   negotiator: [ '1.0.0' ],
+15 silly audit   'node-domexception': [ '1.0.0' ],
+15 silly audit   'node-fetch': [ '3.3.2' ],
+15 silly audit   'object-inspect': [ '1.13.4' ],
+15 silly audit   'on-finished': [ '2.4.1' ],
+15 silly audit   once: [ '1.4.0' ],
+15 silly audit   parseurl: [ '1.3.3' ],
+15 silly audit   path: [ '0.12.7' ],
+15 silly audit   'path-to-regexp': [ '8.3.0' ],
+15 silly audit   picocolors: [ '1.1.1' ],
+15 silly audit   process: [ '0.11.10' ],
+15 silly audit   'proxy-addr': [ '2.0.7' ],
+15 silly audit   'proxy-from-env': [ '1.1.0' ],
+15 silly audit   punycode: [ '2.3.1' ],
+15 silly audit   qs: [ '6.14.0' ],
+15 silly audit   'range-parser': [ '1.2.1' ],
+15 silly audit   'raw-body': [ '3.0.1' ],
+15 silly audit   router: [ '2.2.0' ],
+15 silly audit   'safe-buffer': [ '5.2.1' ],
+15 silly audit   'safer-buffer': [ '2.1.2' ],
+15 silly audit   send: [ '1.2.0' ],
+15 silly audit   'serve-static': [ '2.2.0' ],
+15 silly audit   setimmediate: [ '1.0.5' ],
+15 silly audit   setprototypeof: [ '1.2.0' ],
+15 silly audit   'side-channel': [ '1.1.0' ],
+15 silly audit   'side-channel-list': [ '1.0.0' ],
+15 silly audit   'side-channel-map': [ '1.0.1' ],
+15 silly audit   'side-channel-weakmap': [ '1.0.2' ],
+15 silly audit   sift: [ '17.1.3' ],
+15 silly audit   'sparse-bitfield': [ '3.0.3' ],
+15 silly audit   toidentifier: [ '1.0.1' ],
+15 silly audit   tr46: [ '5.1.1' ],
+15 silly audit   'type-is': [ '2.0.1' ],
+15 silly audit   universalify: [ '2.0.1' ],
+15 silly audit   unpipe: [ '1.0.0' ],
+15 silly audit   util: [ '0.10.4' ],
+15 silly audit   vary: [ '1.1.2' ],
+15 silly audit   'web-streams-polyfill': [ '3.3.3' ],
+15 silly audit   'webidl-conversions': [ '7.0.0' ],
+15 silly audit   'whatwg-url': [ '14.2.0' ],
+15 silly audit   wrappy: [ '1.0.2' ]
+15 silly audit }
+16 http fetch GET 200 https://registry.npmjs.org/npm 353ms
+17 http fetch POST 200 https://registry.npmjs.org/-/npm/v1/security/advisories/bulk 467ms
+18 silly audit report {}
+19 verbose cwd /home/container
+20 verbose os Linux 6.8.12-13-pve
+21 verbose node v21.7.3
+22 verbose npm  v10.9.3
+23 notice
+23 notice New [31mmajor[39m version of npm available! [31m10.9.3[39m -> [34m11.6.0[39m
+23 notice Changelog: [34mhttps://github.com/npm/cli/releases/tag/v11.6.0[39m
+23 notice To update run: [4mnpm install -g npm@11.6.0[24m
+23 notice  { force: true, [Symbol(proc-log.meta)]: true }
+24 verbose exit 0
+25 info ok

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Terminology Service</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/css/translate-result.css" />
+  <link rel="shortcut icon" href="/images/tech_riders_logo.jpg" type="image/x-icon">
+</head>
+
+<body>
+  <%- include("navbar") %>
+    <div class="container">
+      <% if (user) { %>
+        <div class="user-info">
+          <p>👤 Logged in as <b>
+              <%=user.firstname%>
+                <%=user.lastname%>
+            </b></p>
+          <p>(<%= user.email %>)</p>
+          <button id="changePasswordBtn">Change Password</button>
+          <a class="logout" href="/logout">Logout</a>
+        </div>
+
+        <!-- Password Change Modal -->
+        <div id="passwordModal">
+          <h3>Change Password</h3>
+          <form id="changePasswordForm">
+            <input type="password" name="currentPassword" placeholder="Current Password" required><br><br>
+            <input type="password" name="newPassword" placeholder="New Password" required><br><br>
+            <button type="submit">Update Password</button>
+            <button type="button"
+              onclick="document.getElementById('passwordModal').style.display='none'">Cancel</button>
+          </form>
+        </div>
+        <% } %>
+          <!-- Terminology Service Forms -->
+          <h1>Terminology Microservice (FHIR R4)</h1>
+
+          <!-- Lookup -->
+          <h1>Lookup</h1>
+          <form action="/fhir/ValueSet/$lookup" method="get">
+            <input type="text" name="code" placeholder="Enter NAMASTE / ICD code" required />
+            <button type="submit">Lookup</button>
+          </form>
+
+          <!-- Translate -->
+          <h2>Translate</h2>
+          <form action="/fhir/ConceptMap/$translate" method="post">
+            <input type="text" name="code" placeholder="Enter NAMASTE / ICD code" required />
+            <button type="submit">Translate</button>
+          </form>
+
+          <h2>Saved Translations</h2>
+          <% if (rows && rows.length> 0) {
+            const unique = [];
+            const seen = new Set();
+            rows.forEach(r => {
+            const key = `${r.source_code}-${r.target_system}-${r.target_code}`;
+            if (!seen.has(key)) { seen.add(key); unique.push(r); }
+            });
+            %>
+            <table>
+              <tr>
+                <th>ID</th>
+                <th>Source</th>
+                <th>Target</th>
+                <th>Created</th>
+              </tr>
+              <% unique.forEach(r=> { %>
+                <tr>
+                  <td>
+                    <%= r.id %>
+                  </td>
+                  <td>
+                    <%= r.source_system %>: <%= r.source_code %> - <%= r.source_display %>
+                  </td>
+                  <td>
+                    <%= r.target_system %>: <%= r.target_code %> - <%= r.target_display %>
+                  </td>
+                  <td>
+                    <%= r.created_at.toISOString().slice(0,19).replace("T"," ") %></td>
+      </tr>
+    <% }) %>
+  </table>
+  <br>
+  <form id=" clearTranslationsForm" method="POST" action="/fhir/translation?_method=DELETE">
+                      <button type="submit" class="btn"
+                        onclick="return confirm('Are you sure you want to clear all translations?')"
+                        style="background-color: #c0392b;color: #f5f5f5;">Clear All</button>
+                      </form>
+
+                      <% } else { %>
+                        <p>No saved translations yet.</p>
+                        <% } %>
+
+                          <!-- Sync -->
+                          <h2>Sync</h2>
+                          <form action=" /fhir/$sync" method="post">
+                            <button type="submit">Trigger Sync</button>
+                          </form>
+
+                          <!-- Upload -->
+                          <h2>Encounter Upload</h2>
+                          <form action="/fhir/Encounter/$upload" method="post">
+                            <textarea name="bundle" rows="6" cols="60" placeholder="Paste FHIR Bundle JSON"></textarea>
+                            <br />
+                            <div class="button-group">
+                              <button type="submit">Upload</button>
+                              <a href="/fhir/template" class="template-btn">Get Template</a>
+                            </div>
+                          </form>
+
+                          <!-- Get Bundles -->
+                          <h2>Get Bundles by Patient ID</h2>
+                          <form action="/fhir/Encounter" method="get">
+                            <input type="text" name="patientId" placeholder="Enter Patient ID (e.g., patient-001)" />
+                            <button type="submit">Fetch Bundles</button>
+                          </form>
+                          <br>
+                          <h2>Go to FHIR Page and get result:</h2>
+                          <button id="linkButton" type="button">Go to FHIR Page</button>
+    </div>
+
+    <!-- Footer -->
+    <%- include('footer') %>
+      <script>
+        const linkButton = document.getElementById('linkButton');
+
+        linkButton.addEventListener('click', () => {
+          window.location.href = `/fhir`;
+        });
+
+        document.getElementById("changePasswordBtn")?.addEventListener("click", () => {
+          document.getElementById("passwordModal").style.display = "block";
+        });
+
+        document.getElementById("changePasswordForm")?.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const formData = new FormData(e.target);
+          const body = {
+            currentPassword: formData.get("currentPassword"),
+            newPassword: formData.get("newPassword")
+          };
+
+          const res = await fetch("/user/change-password", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body)
+          });
+
+          const data = await res.json();
+          alert(data.message || data.error);
+
+          if (res.ok) {
+            document.getElementById("passwordModal").style.display = "none";
+          }
+        });
+
+      </script>
+      <script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'989540414d1fed37',t:'MTc1OTU4NjkwMw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();</script>
+</body>
+
+</html>

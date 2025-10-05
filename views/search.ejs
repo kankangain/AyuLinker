@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="shortcut icon" href="/images/tech_riders_logo.jpg" type="image/x-icon">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NAMASTE → ICD Mapper</title>
+  <link rel="stylesheet" href="/css/search.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+
+<body>
+  <%- include("navbar") %>
+
+
+    <div class="container py-5">
+      <h1 class="title-head">NAMASTE → ICD-11 Mapper</h1>
+
+      <div class="search-container ">
+        <!-- ================================================================= -->
+        <div class="card first-card">
+          <h3>Enter NAMASTE/ICD code or term:</h3>
+          <form action="/search" method="GET" class="search-form">
+            <input type="text" class="form-control w-75 me-2 NAMASTE-code" name="q"
+              placeholder="Search by NAMASTE code or term (e.g., A-2, Shaqīqa)" required>
+            <p>Try this exaple to get started:</p>
+            <div class="button-links">
+              <button onclick="document.querySelector('.NAMASTE-code').value = 'A-2'">A-2</button>
+              <button onclick="document.querySelector('.NAMASTE-code').value = 'A-5.1'">A-5.1</button>
+              <button onclick="document.querySelector('.NAMASTE-code').value = 'BA'">BA</button>
+            </div>
+            <button type="submit" class="btn-primary">Search</button>
+          </form>
+        </div>
+
+        <!-- ================================================================= -->
+
+        <div class="card second-card">
+          <h3>Enter disease name:</h3>
+          <form action="/lookup" method="get">
+            <input type="text" class="form-control w-75 me-2 mt-3 desease-name" name="q"
+              placeholder="Search by disease name (e.g., Fever)">
+            <p>Try this exaple to get started:</p>
+            <div class="button-links">
+              <button onclick="document.querySelector('.desease-name').value = 'Fever'">Fever</button>
+              <button class="dia" onclick="document.querySelector('.desease-name').value = 'Diabetes'">Diabetes</button>
+              <button onclick="document.querySelector('.desease-name').value = 'Jaundice'">Jaundice</button>
+            </div>
+            <button type="submit" class="btn-primary">Search</button>
+          </form>
+        </div>
+
+        <!-- ================================================================= -->
+      </div>
+    </div>
+    <!-- Footer -->
+    <%- include('footer') %>
+      <script src="/js/hamburger.js"></script>
+      <script src="/js/search-animation.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,353 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'poppins', sans-serif;
+}
+
+/* Translate / Terminology page styles */
+:root {
+  --bg: #f6f8fb;
+  --card: #ffffff;
+  --muted: #6b7280;
+  --accent: #0b74de;
+  --accent-600: #095fb0;
+  --danger: #e11d48;
+  --border: #e6e9ef;
+  --radius: 8px;
+  --shadow: 0 4px 14px rgba(18, 38, 63, 0.06);
+}
+
+.logout{
+  background-color: red;
+  color: white;
+  border: solid transparent;
+  text-decoration: none;
+  padding: 7px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.logout:hover {
+  background-color: white;
+  border: red solid;
+  color: red;
+}
+
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 0;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: var(--bg);
+  color: #0f172a;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+  margin-top: 6rem;
+  margin-bottom: 2rem;
+  max-width: 980px;
+  padding: 26px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.95));
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+h1 {
+  margin: 0 0 18px 0;
+  font-size: 22px;
+  letter-spacing: 0.2px;
+}
+
+h2 {
+  margin: 20px 0 8px 0;
+  font-size: 16px;
+  color: var(--muted);
+}
+
+.user-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  gap: 12px;
+  background: linear-gradient(90deg, rgba(11, 116, 222, 0.06), rgba(11, 116, 222, 0.02));
+  padding: 10px 12px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  color: #073763;
+  font-weight: 600;
+}
+
+.user-info button {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.template-btn{
+  text-wrap: nowrap;
+}
+
+/* Forms */
+form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+form input[type="text"],
+form textarea,
+form input[type="password"] {
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  min-width: 240px;
+  box-sizing: border-box;
+}
+
+form textarea {
+  min-height: 120px;
+  max-width: 100%;
+  width: 100%;
+}
+
+form button {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background .15s ease, transform .06s ease;
+}
+
+form button:hover {
+  background: var(--accent-600);
+  transform: translateY(-1px);
+}
+
+/* Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  background: var(--card);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+table th {
+  text-align: left;
+  padding: 12px 14px;
+  background: #fbfdff;
+  color: var(--muted);
+  font-weight: 700;
+  border-bottom: 1px solid var(--border);
+}
+
+table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #f1f3f7;
+  vertical-align: top;
+}
+
+table tr:last-child td {
+  border-bottom: none;
+}
+
+.no-data {
+  color: var(--muted);
+  padding: 12px 0;
+}
+
+/* Modal (password change) */
+#passwordModal {
+  display: none;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--card);
+  border-radius: 10px;
+  padding: 20px;
+  width: 360px;
+  box-shadow: 0 10px 30px rgba(2, 6, 23, 0.2);
+  z-index: 1200;
+  border: 1px solid var(--border);
+}
+
+#passwordModal h3 {
+  margin: 0 0 10px 0;
+}
+
+#passwordModal form {
+  display: block;
+}
+
+#passwordModal input {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+#passwordModal button {
+  margin-right: 6px;
+}
+
+/* Small helpers */
+.muted {
+  color: var(--muted);
+}
+
+/* Link button */
+#linkButton {
+  margin-top: 8px;
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width:920px) {
+  .container {
+    padding: 18px;
+    width: 100vw;
+  }
+  .user-info{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width:720px) {
+  :root {
+    --radius: 10px;
+  }
+  .user-info{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  html {
+    font-size: 15px;
+  }
+
+  .container {
+    padding: 14px;
+    width: calc(100vw - 2rem);
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+
+  h2 {
+    font-size: 15px;
+  }
+
+  form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  form>* {
+    width: 100%;
+  }
+
+  form input[type="text"],
+  form textarea,
+  form input[type="password"] {
+    min-width: unset;
+    width: 100%;
+    padding: 12px;
+    font-size: 15px;
+  }
+
+  form button {
+    width: 100%;
+    padding: 12px;
+    font-size: 15px;
+  }
+
+  table th,
+  table td {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  #passwordModal {
+    width: 94%;
+    padding: 16px;
+  }
+
+  #linkButton {
+    width: 100%;
+  }
+}
+#changePasswordBtn:hover{
+  color: #e6e9ef;
+}
+/* Accessibility focus styles */
+button:focus,
+input:focus,
+textarea:focus {
+  outline: 3px solid rgba(11, 116, 222, 0.12);
+  outline-offset: 2px;
+}
+/* Base button style for both <button> and .template-btn */
+button,
+.template-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 0.8rem;             /* same font size */
+  font-weight: 600;
+  color: #fff;
+  background: var(--accent);
+  border: none;
+  border-radius: var(--radius);
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+  box-shadow: var(--shadow);
+}
+
+/* Hover effect (shared) */
+button:hover,
+.template-btn:hover {
+  background: var(--accent-600);
+  transform: translateY(-1px);
+}
+
+/* Button group (side by side) */
+.button-group {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.button-group button,
+.button-group .template-btn {
+  flex: 1; /* equal width */
+  text-align: center;
+}

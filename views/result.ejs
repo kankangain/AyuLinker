@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="shortcut icon" href="/images/tech_riders_logo.jpg" type="image/x-icon" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NAMASTE → ICD Mapping Result</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+
+<body>
+
+  <%- include("navbar") %>
+
+    <div class="mt-5 container py-5 container-main">
+      <h2 class="mb-4 title-header" style="font-size: xx-large; margin-bottom: 1rem;">📑 The Results of Your Query</h2>
+      <hr />
+
+      <div class="d-flex side-by-side-layout gap-4 main-content">
+        <!-- Left Column - Results -->
+        <div class="flex-grow-1 text-content">
+          <% if (response) { %>
+            <div class="card shadow p-4 card-hover result-card">
+              <h4 class="text-primary mb-3" style="font-size: x-large;">
+                <%= response.term && response.term.trim() !=="-" ? response.term : "" %>
+                  <span class="badge unani bg-secondary ms-2">
+                    <%= response.system %>
+                  </span>
+              </h4>
+
+              <div class="row mt-3">
+                <div class="col-md-6">
+                  <p>
+                    <strong style="font-weight: 800;">NAMASTE Code:</strong>
+                    <span class="badge text-dark">
+                      <%= response.namasteCode %>
+                    </span>
+                  </p>
+                </div>
+                <div class="col-md-6">
+                  <p>
+                    <strong style="font-weight: 800;">Devnagari/Arabic Term:</strong>
+                    <%= response.devnagari && response.devnagari.trim() !=="" ? response.devnagari : "N/A" %>
+                  </p>
+                </div>
+              </div>
+
+              <hr />
+              <h5 class="mb-3 defination">📝 Definitions</h5>
+              <div class="definition-scroll">
+                <p>
+                  <strong style="font-weight: 800;">Short:</strong>
+                  <%= response.short_definition || "Not available" %>
+                </p>
+                <p>
+                  <strong style="font-weight: 800;">Long:</strong>
+                  <%= response.long_definition || "Not available" %>
+                </p>
+              </div>
+
+              <hr />
+              <div class="mapping-section">
+                <h5 class="defination">🌍 ICD-11 Bio Mapping</h5>
+                <% if (response.icd11Bio && response.icd11Bio !=="Not found" ) { %>
+                  <p>
+                    <strong style="font-weight: 800;">Code:</strong>
+                    <span class="badge bg-primary text-success">
+                      <%= response.icd11Bio %>
+                    </span>
+                  </p>
+
+                  <% if (response.icdDetails && Object.keys(response.icdDetails).length> 0) { %>
+                    <div class="table-responsive">
+                      <table class="table">
+                        <tr>
+                          <th style="font-weight: 800;">Title</th>
+                          <td><%- response.icdDetails.title %></td>
+                        </tr>
+                        <tr>
+                          <th style="font-weight: 800;">Chapter</th>
+                          <td>
+                            <%= response.icdDetails.chapter %>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th style="font-weight: 800;">Leaf Node</th>
+                          <td>
+                            <%= response.icdDetails.isLeaf ? "Yes" : "No" %>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th style="font-weight: 800;">Residual Unspecified</th>
+                          <td>
+                            <%= response.icdDetails.isResidualUnspecified ? "Yes" : "No" %>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th style="font-weight: 800;">Score</th>
+                          <td>
+                            <%= response.icdDetails.score %>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+
+                    <% if (response.icdDetails.matchingPVs && response.icdDetails.matchingPVs.length> 0) {
+                      const pv = response.icdDetails.matchingPVs[0]; %>
+                      <h4 class="matching">Top Matching Term</h4>
+                      <div class="d-flex flex-wrap gap-1">
+                        <span class="badge bg-light text-dark border">
+                          <%- pv.label %> (Score: <%= pv.score %>)
+                        </span>
+                      </div>
+                      <% } %>
+
+                        <% } %>
+                          <% } else { %>
+                            <p class="text-muted">
+                              <%= response.icdDetails?.message || "No ICD-11 Bio mapping found." %>
+                            </p>
+                            <% } %>
+
+                              <% if (response.icdPublicUri) { %>
+                                <div class="mt-2">
+                                  <a href="<%= response.icdPublicUri %>" target="_blank" class="btn btn-sm btn-primary">
+                                    🔗 Check Official ICD-11 Site
+                                  </a>
+                                </div>
+                                <% } %>
+
+              </div>
+
+              <hr />
+
+              <!-- TM1 Mapping -->
+              <div class="card my-3 shadow-sm p-3">
+                <h5 class="card-title defination">🌿 ICD-11 TM1 Mapping</h5>
+
+                <% if (response.icdDetailsTM1 && response.icdDetailsTM1.disorder) { %>
+                  <% if (response.icd11TM1 && response.icd11TM1 !=="Not found" && isNaN(response.icd11TM1)) { %>
+                    <p><strong>TM1 Code:</strong>
+                      <% if (response.icdDetailsTM1.url) { %>
+                        <a href="<%= response.icdDetailsTM1.url %>" target="_blank" class="text-success">
+                          <%= response.icd11TM1 %>
+                        </a>
+                        <% } else { %>
+                          <span class="text-success">
+                            <%= response.icd11TM1 %>
+                          </span>
+                          <% } %>
+                    </p>
+                    <% } %>
+                      <p><strong>Disorder:</strong>
+                        <%= response.icdDetailsTM1.disorder %>
+                      </p>
+                      <p><strong>Module:</strong>
+                        <%= response.icdDetailsTM1.module %>
+                      </p>
+                      <% } else { %>
+                        <p class="text-muted">
+                          <%= response.icdDetailsTM1?.message || "No TM1 mapping found." %>
+                        </p>
+                        <% } %>
+              </div>
+
+              <!-- TM2 Mapping -->
+              <div class="card my-3 shadow-sm p-3">
+                <h5 class="card-title defination">🌱 ICD-11 TM2 Mapping</h5>
+
+                <% if (response.icdDetailsTM2 && response.icdDetailsTM2.disorder) { %>
+                  <% if (response.icd11TM2 && response.icd11TM2 !=="Not found" && isNaN(response.icd11TM2)) { %>
+                    <p><strong>TM2 ID:</strong>
+                      <% if (response.icdDetailsTM2.url) { %>
+                        <a href="<%= response.icdDetailsTM2.url %>" target="_blank" class="text-success">
+                          <%= response.icd11TM2 %>
+                        </a>
+                        <% } else { %>
+                          <span class="text-success">
+                            <%= response.icd11TM2 %>
+                          </span>
+                          <% } %>
+                    </p>
+                    <% } %>
+                      <p><strong>Disorder:</strong>
+                        <%= response.icdDetailsTM2.disorder %>
+                      </p>
+                      <p><strong>Module:</strong>
+                        <%= response.icdDetailsTM2.module %>
+                      </p>
+                      <% } else { %>
+                        <p class="text-muted">
+                          <%= response.icdDetailsTM2?.message || "No TM2 mapping found." %>
+                        </p>
+                        <% } %>
+              </div>
+            </div>
+            <% } else { %>
+              <div class="alert alert-danger mt-4">
+                ❌ No results found for your query.
+              </div>
+              <% } %>
+
+                <div class="mt-4">
+                  <a href="/search-page" class="btn back-button">🔙 Back to Search</a>
+                </div>
+        </div>
+
+        <!-- Right Column - 3D Model -->
+        <div class="flex-shrink-0 model-con" style="width: 100%; max-width: 400px">
+          <div class="card shadow p-3 card-hover model-container" style="border-radius: 16px">
+            <h6 class="text-center mb-3">🌿 Medicinal Plant Leaf</h6>
+            <model-viewer src="/models/leaves/generic-leaf.glb" alt="Generic medicinal leaf" auto-rotate camera-controls
+              shadow-intensity="1" exposure="1" style="width: 100%; height: 400px; min-height: 350px;
+                   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+                   border-radius: 12px;">
+            </model-viewer>
+            <div class="mb-3 text-center">
+              <small class="text-muted">Interactive 3D model of medicinal plant leaf</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <%- include('footer') %>
+</body>
+
+</html>

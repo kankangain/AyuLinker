@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fetch FHIR Bundles</title>
+  <link rel="stylesheet" href="/css/fhir.css">
+  <link rel="shortcut icon" href="/images/tech_riders_logo.jpg" type="image/x-icon">
+
+</head>
+
+<body>
+  <%- include("navbar.ejs") %>
+  <div class="main-container">
+    <div class="container">
+      <h2>Get Bundles by Patient ID</h2>
+      <form id="bundleForm">
+        <input type="text" id="patientId" placeholder="Enter Patient ID (e.g., patient-001)" required />
+        <button type="submit">Fetch Bundles</button>
+      </form>
+
+      <div id="results"></div>
+    </div>
+
+    <!-- Footer -->
+    
+    </div>
+<%- include('footer') %>
+      <script>
+        const form = document.getElementById('bundleForm');
+        const resultsDiv = document.getElementById('results');
+
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const patientId = document.getElementById('patientId').value.trim();
+          if (!patientId) return;
+
+          resultsDiv.innerHTML = 'Loading...';
+
+          try {
+            const res = await fetch(`/fhir/Encounter?patientId=${encodeURIComponent(patientId)}`);
+            const data = await res.json();
+
+            if (!data.entry || data.entry.length === 0) {
+              resultsDiv.innerHTML = '<p>No bundles found for this patient.</p>';
+              return;
+            }
+
+            resultsDiv.innerHTML = data.entry.map(bundle => {
+              const resourcesHtml = (bundle.resource.entry || []).map(r => {
+                const resType = r.resource.resourceType;
+                if (resType === 'Patient') {
+                  const name = r.resource.name[0];
+                  return `
+                <div class="resource">
+                  <h4>Patient</h4>
+                  <div class="field"><strong>Name:</strong> ${name.given.join(' ')} ${name.family}</div>
+                  <div class="field"><strong>Gender:</strong> ${r.resource.gender}</div>
+                  <div class="field"><strong>Birth Date:</strong> ${r.resource.birthDate}</div>
+                </div>
+              `;
+                } else if (resType === 'Encounter') {
+                  const reason = (r.resource.reasonCode || []).map(rc => rc.text).join(', ');
+                  return `
+                <div class="resource">
+                  <h4>Encounter</h4>
+                  <div class="field"><strong>Encounter ID:</strong> ${r.resource.id}</div>
+                  <div class="field"><strong>Status:</strong> ${r.resource.status}</div>
+                  <div class="field"><strong>Class:</strong> ${r.resource.class.display}</div>
+                  <div class="field"><strong>Start:</strong> ${r.resource.period.start}</div>
+                  <div class="field"><strong>End:</strong> ${r.resource.period.end}</div>
+                  <div class="field"><strong>Reason:</strong> ${reason}</div>
+                </div>
+              `;
+                } else {
+                  return `
+                <div class="resource">
+                  <h4>${resType}</h4>
+                  <pre>${JSON.stringify(r.resource, null, 2)}</pre>
+                </div>
+              `;
+                }
+              }).join('');
+
+              return `
+            <div class="bundle">
+              <h3>Bundle ID: ${bundle.fullUrl}</h3>
+              <div class="field"><strong>Patient ID:</strong> ${bundle.patientId}</div>
+              <div class="field"><strong>Created At:</strong> ${new Date(bundle.created).toLocaleString()}</div>
+              ${resourcesHtml}
+            </div>
+          `;
+            }).join('');
+
+          } catch (err) {
+            resultsDiv.innerHTML = '<p style="color:red;">Error fetching bundles.</p>';
+            console.error(err);
+          }
+        });
+      </script>
+</body>
+
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="shortcut icon" href="/images/tech_riders_logo.jpg" type="image/x-icon">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AyuLinker - About</title>
+    <link rel="stylesheet" href="/css/index.css" />
+    <link rel="stylesheet" href="/css/about.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Navigation -->
+        <%- include('navbar') %>
+
+
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <div class="hero-container">
+                    <div class="hero-text">
+                        <h1>Bridging Traditional Medicine and Modern Healthcare</h1>
+                        <p>
+                            AyuLinker is a FHIR-compliant terminology service that harmonizes
+                            India's NAMASTE codes with WHO ICD-11 standards, enabling seamless
+                            integration of Ayurveda, Siddha, and Unani medicine into digital
+                            health systems.
+                        </p>
+                    </div>
+
+                    <div class="hero-visual">
+                        <div class="flex-shrink-0" style="width: 100%; max-width: 600px">
+                            <div class="card shadow p-3 card-hover model-container" style="border-radius: 16px">
+                                <h6 class="text-center mb-3" style="text-align: start">
+                                    🌿 Medicinal Plant Leaf
+                                </h6>
+                                <model-viewer id="glb" src="/models/leaves/About.glb" alt="Medicinal leaf" auto-rotate
+                                    camera-controls shadow-intensity="1" exposure="1" style="
+                    width: 100%;
+                    height: 400px;
+                    min-height: 350px;
+                    background: #e5e5e5;
+                    border-radius: 12px;">
+                                    <div slot="poster" style="display: flex;align-items: center;justify-content: center;height: 100%;
+                      color: #666;background: #f8f9fa;border-radius: 12px;">
+                                        <div style="text-align: center">
+                                            <div style="font-size: 2rem; margin-bottom: 10px">🌿</div>
+                                            <div>Loading 3D Model...</div>
+                                            <div style="font-size: 0.8rem; color: #999; margin-top: 5px">
+                                                Interactive visualization
+                                            </div>
+                                        </div>
+                                    </div>
+                                </model-viewer>
+                                <div class="mb-3 text-center">
+                                    <small class="text-muted">Interactive 3D model of medicinal plant leaf</small>
+                                </div>
+                                <div class="leaf-label">
+                                    AYUSH: Harmonizing NAMASTE with ICD-11
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Problem and Solution Section -->
+            <section class="content-section">
+                <div class="content-container problem-solution-grid">
+                    <div class="info-card problem-card">
+                        <h2>The Interoperability Challenge</h2>
+                        <p>
+                            India's Ayush sector is transitioning to digital health systems
+                            but faces significant challenges in standardizing terminology
+                            across traditional and modern medicine practices.
+                        </p>
+                        <ul>
+                            <li>Different coding standards (NAMASTE vs ICD-11)</li>
+                            <li>Interoperability gaps between systems</li>
+                            <li>Challenges in insurance & patient records</li>
+                            <li>National & international reporting issues</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card solution-card">
+                        <h2>Our Solution</h2>
+                        <p>AyuLinker provides a standardized terminology service that:</p>
+                        <ul>
+                            <li>Maps NAMASTE codes to ICD-11 TM2 and Biomedicine codes</li>
+                            <li>Provides FHIR-compliant APIs for EMR integration</li>
+                            <li>Ensures compliance with India's 2016 EHR Standards</li>
+                            <li>Enables dual-coding for traditional & modern medicine</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section class="features-section">
+                <div class="content-container">
+                    <h2 class="section-title">AyuLinker Key Features</h2>
+                    <p class="section-subtitle">
+                        Seamless integration of traditional medicine into digital health
+                        ecosystems
+                    </p>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">🌿</div>
+                            <h3>Terminology Mapping</h3>
+                            <p>
+                                Bi-directional mapping between NAMASTE, WHO Ayurveda
+                                Terminologies, and ICD-11 with AI suggestions.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">⚡</div>
+                            <h3>FHIR-Compliant API</h3>
+                            <p>
+                                RESTful API for terminology lookup, expansion, and code
+                                translation compliant with FHIR R4.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🔒</div>
+                            <h3>Secure & Compliant</h3>
+                            <p>
+                                OAuth 2.0 with ABHA, ISO 22600 access control, and audit trails.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🔄</div>
+                            <h3>Real-time Sync</h3>
+                            <p>
+                                Auto-updates with WHO ICD-API for always-current terminology.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🔍</div>
+                            <h3>Advanced Search</h3>
+                            <p>
+                                Smart search with auto-complete returning both NAMASTE and
+                                ICD-11 codes.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">📊</div>
+                            <h3>Analytics & Reporting</h3>
+                            <p>
+                                Real-time morbidity analytics aligned with Ayush & WHO
+                                reporting.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- How It Works -->
+            <section class="content-section">
+                <div class="content-container">
+                    <h2 class="section-title">How AyuLinker Works</h2>
+                    <p class="section-subtitle">
+                        Our service integrates seamlessly with EMR systems for dual-coding
+                    </p>
+                    <div class="problem-solution-grid">
+                        <div class="info-card">
+                            <h3>1. Ingest</h3>
+                            <p>NAMASTE CSV → FHIR CodeSystem resources</p>
+                        </div>
+                        <div class="info-card">
+                            <h3>2. Map</h3>
+                            <p>
+                                Create ConceptMaps between NAMASTE, Ayurveda, and ICD-11 codes
+                            </p>
+                        </div>
+                        <div class="info-card">
+                            <h3>3. Sync</h3>
+                            <p>Keep codes updated via WHO ICD-API</p>
+                        </div>
+                        <div class="info-card">
+                            <h3>4. Serve</h3>
+                            <p>FHIR APIs deliver terminology services to EMRs</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Technical Specifications -->
+            <section class="features-section">
+                <div class="content-container">
+                    <h2 class="section-title">Technical Specifications</h2>
+                    <p class="section-subtitle">
+                        Compliant with India's EHR Standards & global specifications
+                    </p>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">📜</div>
+                            <h3>Standards Compliance</h3>
+                            <p>FHIR R4, SNOMED CT, LOINC, ISO 22600, OAuth 2.0.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🖥️</div>
+                            <h3>API Endpoints</h3>
+                            <p>
+                                CodeSystem, ValueSet, ConceptMap with $translate operations.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">⚙️</div>
+                            <h3>Integration Features</h3>
+                            <p>
+                                Lightweight micro-service, EMR widgets, dual-coding storage.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🔐</div>
+                            <h3>Security & Audit</h3>
+                            <p>
+                                Consent mgmt, ABHA integration, audit trails, version tracking.
+                            </p>
+                        </div>
+                        <!-- New Feature 1 -->
+                        <div class="feature-card">
+                            <div class="feature-icon">☁️</div>
+                            <h3>Cloud Ready</h3>
+                            <p>Scalable deployment on our own server and easily accessible from anywhere in the world.</p>
+                        </div>
+                        <!-- New Feature 2 -->
+                        <div class="feature-card">
+                            <div class="feature-icon">📊</div>
+                            <h3>Analytics & Reporting</h3>
+                            <p>
+                                Real-time dashboards, terminology usage metrics, and predictive insights.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- CTA Section -->
+            <section class="cta-section">
+                <div class="content-container">
+                    <div class="cta-card">
+                        <h2 class="section-title">🌿 Ready to Integrate AyuLinker?</h2>
+                        <p class="section-subtitle">
+                            Empower your healthcare systems with interoperability. Try our
+                            demo, explore the GitHub repo, or get in touch with us directly.
+                        </p>
+                        <div class="cta-buttons">
+                            <a href="/" class="cta-button">🚀 View Live Demo</a>
+                            <a href="https://github.com/sagniksaha279/AyuLinker.git" target="_blank"
+                                class="cta-button secondary">💻
+                                GitHub Repository</a>
+                            <a href="mailto:contacttechriders@gmail.com" class="cta-button highlight">📩 Contact Us</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="container">
+                <img src="/images/tech_riders_logo.jpg" alt="TechRiders Logo" style="border-radius: 50%;">
+                <p><b>We're delighted to have you on our website! 😊</b></p>
+                <p>Thanks for making it awesome just by being here! 🎉</p>
+
+                <div class="team">
+                    <div class="member">
+                        <strong>Sagnik Saha</strong>
+                        🖥 Backend & DB Developer<br>
+                        <a href="https://www.linkedin.com/in/sagniksaha279/" target="_blank">LinkedIn</a>
+                    </div>
+                    <div class="member">
+                        <strong>Kankan Gain</strong>
+                        🔌Frontend Devoloper<br>
+                        <a href="https://www.linkedin.com/in/kankan-gain/" target="_blank">LinkedIn</a>
+                    </div>
+                    <div class="member">
+                        <strong>Rumpi Saha</strong>
+                        📚Presentation Lead<br>
+                        <a href="https://www.linkedin.com/in/rumpi-saha-a42137216?" target="_blank">LinkedIn</a>
+                    </div>
+                    <div class="member">
+                        <strong>Debmalya Bhattacharya</strong>
+                        🤖Content Writer<br>
+                        <a href="www.linkedin.com/in/09io" target="_blank">LinkedIn</a>
+                    </div>
+                    <div class="member">
+                        <strong>Rayaan Alam</strong>
+                        🧪Tester & Marketing<br>
+                        <a href="https://www.linkedin.com/in/rayaan-alam/" target="_blank">LinkedIn</a>
+                    </div>
+                    <div class="member">
+                        <strong>Karishma Bal</strong>
+                        🎤Presenter & Speaker<br>
+                        <a href="https://www.linkedin.com/in/karishmabal" target="_blank">LinkedIn</a>
+                    </div>
+                </div>
+    </main>
+    <!-- Footer -->
+    <%- include('footer') %>
+        <script src="/js/index-animation.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create FHIR Bundle Template</title>
+  <link rel="stylesheet" href="/css/fhirTemplate.css">
+  <link rel="shortcut icon" href="/images/tech_riders_logo.jpg" type="image/x-icon">
+</head>
+
+<body>
+  <%- include("navbar.ejs") %>
+
+  <div class="container">
+    <h2>FHIR Bundle Template Generator</h2>
+
+    <div class="container-main">
+      <form id="fhirForm">
+        <div class="field">
+          <label>Patient ID</label>
+          <input type="text" id="patientId" required readonly />
+        </div>
+        <div class="field">
+          <label>First Name</label>
+          <input type="text" id="givenName" value="Rohit" />
+        </div>
+        <div class="field">
+          <label>Last Name</label>
+          <input type="text" id="familyName" value="Sharma" />
+        </div>
+        <div class="field">
+          <label>Gender</label>
+          <select id="gender">
+            <option value="male" selected>Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Birth Date</label>
+          <input type="date" id="birthDate" value="1990-01-01" />
+        </div>
+        <div class="field">
+          <label>Encounter ID</label>
+          <input type="text" id="encounterId" required readonly />
+        </div>
+        <div class="field">
+          <label>Reason (Text)</label>
+          <input type="text" id="reasonText" value="Headache and nausea" />
+        </div>
+        <div class="field">
+          <label>Reason Code</label>
+          <input type="text" id="reasonCode" value="A-2" />
+        </div>
+        <div class="field">
+          <label>Reason Display</label>
+          <input type="text" id="reasonDisplay" value="Shaqiqa (Migraine disorder)" />
+        </div>
+
+        <button type="submit">Generate JSON</button>
+      </form>
+
+      <h3>Generated FHIR Bundle JSON</h3>
+      <pre id="jsonOutput">{ }</pre>
+      <button onclick="copyJson()">Copy JSON</button>
+    </div>
+
+    <a href="/terminology" class="back-button">Back to FHIR</a>
+  </div>
+
+  <%- include("footer.ejs") %>
+
+<script>
+  //Initialize ID from 5
+  let lastId = 5;
+
+  function updateIds() {
+    lastId++;
+    const patientId = String(lastId).padStart(3, "0");
+    const encounterId = `encounter-${patientId}`;
+    document.getElementById("patientId").value = patientId;
+    document.getElementById("encounterId").value = encounterId;
+  }
+
+  //Set initial IDs
+  updateIds();
+
+  const form = document.getElementById("fhirForm");
+  const output = document.getElementById("jsonOutput");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const namasteCode = document.getElementById("reasonCode").value;
+    const namasteDisplay = document.getElementById("reasonDisplay").value;
+
+    let extraCodings = [];
+    try {
+      const res = await fetch(`/fhir/ConceptMap/$translate?q=${encodeURIComponent(namasteCode)}`);
+      const data = await res.json();
+      if (data.parameter) {
+        extraCodings = data.parameter.map(p => p.valueCoding);
+      }
+    } catch (err) {
+      console.warn("Translation fetch failed", err);
+    }
+
+    const allCodings = [
+      { code: namasteCode, system: "NAMASTE", display: namasteDisplay },
+      ...extraCodings
+    ];
+
+    const uniqueCodings = [];
+    const seen = new Set();
+    for (const c of allCodings) {
+      if (!seen.has(c.system)) {
+        uniqueCodings.push(c);
+        seen.add(c.system);
+      }
+    }
+
+    const bundle = {
+      resourceType: "Bundle",
+      type: "transaction",
+      entry: [
+        {
+          fullUrl: `urn:uuid:${document.getElementById("encounterId").value}`,
+          request: { url: "Encounter", method: "POST" },
+          resource: {
+            resourceType: "Encounter",
+            id: document.getElementById("encounterId").value,
+            class: { code: "AMB", system: "http://terminology.hl7.org/CodeSystem/v3-ActCode", display: "ambulatory" },
+            period: {
+              start: new Date().toISOString(),
+              end: new Date(Date.now() + 30 * 60000).toISOString()
+            },
+            status: "finished",
+            subject: { reference: `Patient/${document.getElementById("patientId").value}` },
+            reasonCode: [
+              {
+                text: document.getElementById("reasonText").value,
+                coding: uniqueCodings
+              }
+            ]
+          }
+        },
+        {
+          fullUrl: `urn:uuid:${document.getElementById("patientId").value}`,
+          request: { url: "Patient", method: "POST" },
+          resource: {
+            resourceType: "Patient",
+            id: document.getElementById("patientId").value,
+            name: [
+              {
+                use: "official",
+                given: [document.getElementById("givenName").value],
+                family: document.getElementById("familyName").value
+              }
+            ],
+            gender: document.getElementById("gender").value,
+            birthDate: document.getElementById("birthDate").value
+          }
+        }
+      ]
+    };
+    output.textContent = JSON.stringify(bundle, null, 2);
+    updateIds();
+  });
+
+  function copyJson() {
+    navigator.clipboard.writeText(output.textContent);
+    alert("JSON copied to clipboard!");
+  }
+</script>
+
+</body>
+</html>

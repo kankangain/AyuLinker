@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayulinker - Login</title>
+    <link rel="shortcut icon" href="/images/tech_riders_logo.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="/css/login.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <%- include("navbar") %>
+        <div class="container">
+            <div class="main-content">
+                <form id="loginForm">
+                    <label for="username">Username / Email:</label>
+                    <input type="text" id="username" name="identifier" required>
+
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+
+                    <button type="submit">Login</button>
+                </form>
+
+                <p>Create your account <a href="/register">Register Here</a></p>
+                <p><a href="#" id="forgotPasswordLink">Forgot Password?</a></p>
+            </div>
+            <!-- Forgot Password Modal -->
+            <div id="forgotModal" class="modal">
+                <div class="modal-content">
+                    <span class="close-btn"
+                        onclick="document.getElementById('forgotModal').style.display='none'">&times;</span>
+                    <h3>🔒 Reset Password</h3>
+                    <form id="forgotForm">
+                        <label for="resetEmail">Enter your registered email</label>
+                        <input type="email" id="resetEmail" name="email" placeholder="example@mail.com" required>
+                        <button type="submit" class="btn-primary">Send Reset Link</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+        <%- include('footer') %>
+            <script>
+
+                document.getElementById("loginForm").addEventListener("submit", async (e) => {
+                    e.preventDefault();
+
+                    const identifier = document.getElementById("username").value;
+                    const password = document.getElementById("password").value;
+
+                    const res = await fetch("/user/login", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ identifier, password })
+                    });
+
+                    const data = await res.json();
+
+                    if (res.ok) {
+                        alert(data.message);
+                        window.location.href = "/terminology";
+                    } else {
+                        alert(data.error || "Login failed");
+                    }
+                });
+
+                // Forgot Password Popup
+                document.getElementById("forgotPasswordLink").addEventListener("click", () => {
+                    document.getElementById("forgotModal").style.display = "flex";
+               
+                });
+
+                // Forgot Password Form
+                document.getElementById("forgotForm").addEventListener("submit", async (e) => {
+                    e.preventDefault();
+                    const email = e.target.email.value;
+
+                    const res = await fetch("/user/forgot-password", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ email })
+                    });
+
+                    const data = await res.json();
+                    alert(data.message || data.error);
+
+                    if (res.ok) {
+                        document.getElementById("forgotModal").style.display = "none";
+                    }
+                });
+
+
+
+            </script>
+            <script src="/js/login-animation.js"></script>
+</body>
+
+</html>

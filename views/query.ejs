@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="shortcut icon" href="/images/tech_riders_logo.jpg" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <link rel="stylesheet" href="/css/query.css">
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+
+<body>
+    <%- include("navbar") %>
+
+        <h3 class="searched-for">Your Search Result for: <strong>
+                <%= query.toUpperCase().trim() %>
+            </strong></h3>
+        <div class="sort-bar">
+            <form method="get" action="/lookup" class="sort-form">
+                <input type="hidden" name="q" value="<%= query %>">
+                <label for="sort">Sort by:</label>
+                <select name="sort" id="sort" onchange="this.form.submit()">
+                    <option value="none" <%=sortBy==='none' ? 'selected' : '' %>>No Sort</option>
+                    <option value="term" <%=sortBy==='term' ? 'selected' : '' %>>Name</option>
+                    <option value="code" <%=sortBy==='code' ? 'selected' : '' %>>Code</option>
+                </select>
+            </form>
+        </div>
+        <div class="find-bar">
+            <label for="findInput">Find in page:</label>
+            <input type="text" id="findInput" placeholder="Type to filter results…" oninput="filterResults()" />
+        </div>
+
+        <div class="results-container">
+            <% if (results && results.length> 0) { %>
+                <% results.forEach(result=> { %>
+                    <main class="result-card">
+                        <h2>System: <%= result.system %>
+                        </h2>
+                        <p><strong>Code:</strong>
+                            <%= result.code %>
+                        </p>
+                        <p><strong>Term:</strong>
+                            <%= result.term %>
+                        </p>
+                        <p><strong>Short Definition:</strong>
+                            <%= result.short_definition %>
+                        </p>
+
+                        <% if (result.long_definition) { %>
+                            <div class="long-def">
+                                <strong>Long Definition:</strong>
+                                <div class="truncated">
+                                    <%= result.long_definition %>
+                                </div>
+
+                                <% if (result.formatted_definition) { %>
+                                    <div class="full-hidden">
+                                        <% if (result.formatted_definition.isList) { %>
+                                            <%- result.formatted_definition.content %>
+                                                <% } else { %>
+                                                    <p><%- result.formatted_definition.content %></p>
+                                                    <% } %>
+                                    </div>
+                                    <button style="margin: 5px;margin-left: -3px;font-size: 0.8rem; " type="button"
+                                        class="toggle-btn" aria-expanded="false" onclick="toggleContent(this)">Show
+                                        More</button>
+                                    <% } %>
+                            </div>
+                            <% } %>
+                                <% if (result.raw.NUMC_CODE) { %>
+                                    <h3>ICD-11 Mapping (NAMASTE)</h3>
+                                    <p><strong>Sr No.:</strong>
+                                        <%= result.raw["Sr No."] %>
+                                    </p>
+                                    <p><strong>NUMC ID:</strong>
+                                        <%= result.raw.NUMC_ID %>
+                                    </p>
+                                    <p><strong>NUMC CODE:</strong>
+                                        <%= result.raw.NUMC_CODE %>
+                                    </p>
+                                    <p><strong>Arabic Term:</strong>
+                                        <%= result.raw.Arabic_term %>
+                                    </p>
+                                    <p><strong>NUMC Term:</strong>
+                                        <%= result.raw.NUMC_TERM %>
+                                    </p>
+                                    <% } %>
+                                        <div class="spacer"></div>
+                    </main>
+                    <% }) %>
+                        <% } else { %>
+                            <div class="no-results">
+                                <p>No results found.</p>
+                            </div>
+                            <% } %>
+        </div>
+        <div class="go-to-top">⬆ Go to top</div>
+        <br>
+        <!-- Footer -->
+        <%- include('footer') %>
+            <script src="/js/query-animation.js"></script>
+            <script>
+                function toggleContent(button) {
+                    const content = button.previousElementSibling; // .full-hidden div
+                    const isExpanded = button.getAttribute("aria-expanded") === "true";
+
+                    if (isExpanded) {
+                        content.classList.remove("show");
+                        button.textContent = "Show More";
+                        button.setAttribute("aria-expanded", "false");
+                    } else {
+                        content.classList.add("show");
+                        button.textContent = "Show Less";
+                        button.setAttribute("aria-expanded", "true");
+                    }
+                }
+                document.addEventListener('DOMContentLoaded', () => {
+                    const navToggle = document.querySelector('.nav-toggle');
+                    const navLinks = document.querySelector('.nav-links');
+                    if (!navToggle || !navLinks) return;
+
+                    navToggle.addEventListener('click', () => {
+                        navLinks.classList.toggle('active');
+                        document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+                    });
+
+                    navLinks.querySelectorAll('a').forEach(link => {
+                        link.addEventListener('click', () => {
+                            navLinks.classList.remove('active');
+                            document.body.style.overflow = '';
+                        });
+                    });
+                });
+
+            </script>
+            <script>
+                function filterResults() {
+                    const query = document.getElementById('findInput').value.toLowerCase();
+                    const cards = document.querySelectorAll('.result-card');
+
+                    cards.forEach(card => {
+                        const text = card.innerText.toLowerCase();
+                        card.style.display = text.includes(query) ? '' : 'none';
+                    });
+                }
+            </script>
+
+            <script src="/js/hamburger.js"></script>
+</body>
+
+</html>
