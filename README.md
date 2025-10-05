@@ -7,7 +7,7 @@ It enables seamless **code mapping, search, and visualization** through a respon
 ---
 
 ## 🔗 **Live Demo**
-🌐 **[AyuLinker](https://sih.kankangain.com)**  
+🌿 **[AyuLinker](https://sih.kankangain.com)**  
 
 ---
 
@@ -107,7 +107,5 @@ This project is developed for Smart India Hackathon 2025 by Team TECH RIDERS.
 
 ---
 
-### Note - We are currently not providing with the datasets of AYUSH and the .env file with ICD-11 credentials in our github, to work with that kindly mail us.
-
----
+### Note - We are currently not providing with the datasets of AYUSH and the .env file with ICD-11 API credentials in our github, to work with that kindly mail us.
 Innovation Today for a Smarter Tomorrow 🌟.
