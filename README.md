@@ -7,7 +7,7 @@ It enables seamless **code mapping, search, and visualization** through a respon
 ---
 
 ## 🔗 **Live Demo**
-🌐 **[Visit AyuLinker](https://sih.kankangain.com)**  
+🌐 **[AyuLinker](https://sih.kankangain.com)**  
 
 ---
 
@@ -29,6 +29,8 @@ Manual integration of NAMASTE and ICD-11 TM2 codes in EMRs is:
 - ❌ **Inconsistent** across hospitals and systems  
 - 📄 **Non-interoperable** with national EHR frameworks  
 - 📉 **Lacking analytics** for policymaking and research  
+
+---
 
 ### 🧩 **Root Causes**
 - 🗣️ Linguistic and regional variations in traditional medicine terms  
@@ -75,6 +77,8 @@ AyuLinker provides a **FHIR-compliant, automated integration engine** to connect
     OR node app.js
 #### 5.Server will be available at: http://localhost:25579
 
+---
+
 # 📂 Project Structure
     ├── models/
     │   ├── csv.js          # Load and parse CSV datasets
@@ -89,12 +93,16 @@ AyuLinker provides a **FHIR-compliant, automated integration engine** to connect
     ├── .env                # API credentials (not in git)
     ├── package.json
     └── README.md
-    
+
+---
+
 # 📞 Support
     For technical support or questions about this project, please contact : Tech Riders
     📧 Tech Riders Team: contacttechriders@gmail.com
 
+---
+
 # 📜 License
 This project is developed for Smart India Hackathon 2025 by Team TECH RIDERS.
 
-Innovation Today for a Smarter Tomorrow 🌟.
+    Innovation Today for a Smarter Tomorrow 🌟.
