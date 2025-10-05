@@ -3,12 +3,8 @@
 A ⚙️ Node.js + Express application to map codes from the 🧾 NAMASTE dataset with the 🌍 WHO ICD-11 API.  
 It integrates 💊 ICD-11 Bio (MMS) and TM2 systems, supports 📂 CSV lookups, and renders results in an interactive 🖥️ EJS dashboard.
 
----
-
 ## 🔗 Live Demo
 🌐 **Visit Here:** [AyuLinker](https://sih.kankangain.com)
-
----
 
 # 📌 Features
 1. 🔍 Search codes in the NAMASTE dataset  
@@ -18,7 +14,6 @@ It integrates 💊 ICD-11 Bio (MMS) and TM2 systems, supports 📂 CSV lookups, 
 5. 🔑 Token-based authentication with WHO API  
 6. 📊 Responsive dashboard for result visualization  
 
----
 ## 💡 Problem Statement
 Manual integration of NAMASTE and ICD-11 TM2 codes in EMRs is:
 - ⏳ Time-consuming and error-prone  
@@ -26,17 +21,13 @@ Manual integration of NAMASTE and ICD-11 TM2 codes in EMRs is:
 - 📄 Poorly interoperable with national EHR standards  
 - 📉 Lacking in analytics and policy-level scalability  
 
----
 ### 🧩 Root Causes
 - 🗣️ Linguistic variations in traditional medicine terminology  
 - 🚫 No standardized mapping workflows  
 - 🔄 Frequent ICD-11 and NAMASTE updates needing re-mapping  
 - 🧮 Manual processes slowing adoption and accuracy  
 
----
-
 ## 🧠 Proposed Solution
-
 AyuLinker provides:
 - 🔗 **Auto-mapping engine** for NAMASTE ↔ ICD-11 TM2 ↔ Biomedicine  
 - ⚙️ **FHIR-Compliant APIs** for search, translation, and bundle upload  
@@ -44,24 +35,11 @@ AyuLinker provides:
 - 📊 **Analytics-ready dashboards** for AYUSH morbidity insights  
 - 🤖 **AI Chatbot** for symptom-based code suggestions  
 
----
-
 ## 🌱 Future Scope
-
 - 🧬 SNOMED CT and LOINC integration for labs and diagnostics  
 - 📱 QR-based patient history and prescription retrieval  
 - 🧠 Predictive healthcare: early outbreak detection via ML  
 - 📈 Real-time disease monitoring dashboards for MoA and policymakers  
-
----
-
-## 🌱 Future Scope
-- SNOMED CT and LOINC integration for labs and diagnostics  
-- QR-based patient history and prescription retrieval  
-- Predictive healthcare: early outbreak detection via ML  
-- Real-time disease monitoring dashboards for MoA and policymakers  
-
----
 
 # 🔧 Installation & Setup
 #### 1. Clone the repository
@@ -76,8 +54,6 @@ AyuLinker provides:
     npm run dev
     OR node app.js
 #### 5.Server will be available at: http://localhost:25579
-
----
 
 # 📂 Project Structure
     ├── models/
@@ -94,8 +70,6 @@ AyuLinker provides:
     ├── package.json
     └── README.md
     
----
-
 # 📞 Support
 For technical support or questions about this project, please contact : Tech Riders
 Mail us at : [📧Tech Riders](contacttechriders@gmail.com)
@@ -103,5 +77,4 @@ Mail us at : [📧Tech Riders](contacttechriders@gmail.com)
 # 📜 License
 This project is developed for Smart India Hackathon 2025 by Team TECH RIDERS.
 
----
 Innovation Today for a Smarter Tomorrow 🌟.
