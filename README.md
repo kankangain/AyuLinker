@@ -129,4 +129,4 @@ Innovation Today for a Smarter Tomorrow 🌟
 
 ## Contributors
 
-[![Contributors](https://contrib.oxxyhosting.com/api/contributors/kankangain/ayulinkerSIH)](https://github.com/kankangain/ayulinkerSIH)
+[![Contributors](https://contrib.oxxyhosting.com/api/contributors/kankangain/ayulinker)](https://github.com/kankangain/ayulinker/graphs/contributors)
