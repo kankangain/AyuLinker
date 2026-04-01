@@ -555,6 +555,128 @@ app.get("/map/:code", async (req, res) => {
   }
 });
 
+app.get("/api/:code", async (req, res) => {
+  try {
+    const ICD_API_KEY = await getToken();
+    const code = req.params.code.toUpperCase();
+
+    const match = concepts.find((row) => row.code?.toUpperCase() === code);
+    if (!match) {
+      return res
+        .status(404)
+        .json({ message: "Code not found in NAMASTE dataset" });
+    }
+
+    const response = {
+      system: match.system || "",
+      namasteCode: match.code,
+      term: match.term || "-",
+      devnagari: match.devnagari,
+      short_definition: match.short_definition,
+      long_definition: match.long_definition,
+      icd11Bio: "",
+      icdEntityUri: "",
+      icdPublicUri: "",
+      icdDetails: {},
+      icd11TM1: "",
+      icdDetailsTM1: {},
+      icd11TM2: "",
+      icdDetailsTM2: {},
+    };
+
+    //WHO ICD-11 Bio lookup
+    if (ICD_API_KEY) {
+      const headers = {
+        Accept: "application/json",
+        "API-Version": "v2",
+        "Accept-Language": "en",
+        Authorization: `Bearer ${ICD_API_KEY}`,
+      };
+
+      const baseQuery = match.short_definition || match.term;
+      const queries = [
+        cleanQuery(baseQuery),
+        cleanQuery(match.term),
+        cleanQuery(baseQuery.split(" ").slice(0, 2).join(" ")),
+      ];
+
+      try {
+        const topEntity = await trySearch(queries, headers);
+        if (topEntity) {
+          response.icd11Bio = topEntity.theCode?.split("/")?.[0] || "";
+          response.icdEntityUri = topEntity.id || "";
+          response.icdDetails = topEntity;
+
+          if (topEntity.matchingPVs?.length > 0) {
+            const foundationUri = topEntity.matchingPVs[0].foundationUri;
+            const entityId = foundationUri.split("/").pop();
+            response.icdPublicUri = `https://icd.who.int/browse/2025-01/mms/en#${entityId}`;
+          }
+        }
+      } catch (err) {
+        console.error("WHO API search failed:", err.message);
+      }
+    }
+
+    //TM1 / TM2 lookup
+    let queryTerm = stripHumours(match.short_definition || match.term);
+    queryTerm = applySynonyms(queryTerm);
+    // console.log("Looking up TM1 for:", queryTerm);
+    let tm1Match = findTM1Match(queryTerm);
+    // console.log("Looking up TM2 for:", queryTerm);
+    let tm2Match = findTM2Match(queryTerm);
+    if (!tm1Match && queryTerm.includes(" ")) {
+      const keyword = queryTerm.split(" ").slice(0, 2).join(" ");
+      // console.log("Retrying TM1 with keyword:", keyword);
+      tm1Match = findTM1Match(keyword);
+    }
+    if (!tm2Match && queryTerm.includes(" ")) {
+      const keyword = queryTerm.split(" ").slice(0, 2).join(" ");
+      // console.log("Retrying TM2 with keyword:", keyword);
+      tm2Match = findTM2Match(keyword);
+    }
+
+    //TM1 response
+    if (tm1Match) {
+      response.icd11TM1 = tm1Match.tm_code;
+      response.icdDetailsTM1 = {
+        disorder: tm1Match.disorder,
+        module: tm1Match.module,
+        url: tm1Match.url,
+      };
+    } else {
+      response.icd11TM1 = "Not found";
+      response.icdDetailsTM1 = {
+        message:
+          "TM1 dataset entry missing. Please check the official TM1 site.",
+        redirect: "https://icd.who.int/browse/tm/en",
+      };
+    }
+
+    //TM2 response
+    if (tm2Match) {
+      response.icd11TM2 = tm2Match.tm_code;
+      response.icdDetailsTM2 = {
+        disorder: tm2Match.disorder,
+        module: tm2Match.module,
+        url: tm2Match.url,
+      };
+    } else {
+      response.icd11TM2 = "Not found";
+      response.icdDetailsTM2 = {
+        message:
+          "TM2 dataset entry missing. Please check the official TM2 site.",
+        redirect: "https://icd.who.int/browse/tm/en",
+      };
+    }
+
+    // render result
+    res.json({ response });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
 app.get("/terminology", ensureLoggedIn, (req, res) => {
   const sql = "SELECT * FROM translations ORDER BY created_at DESC LIMIT 20";
   connection.query(sql, (err, results) => {
@@ -918,11 +1040,9 @@ app.post("/fhir/Encounter/$upload", ensureLoggedIn, async (req, res) => {
 
     if (rows[0].count > 0) {
       console.warn(`Duplicate ID detected: ${patientId}`);
-      return res
-        .status(400)
-        .json({
-          error: `Patient ID '${patientId}' already exists. Please use a new ID.`,
-        });
+      return res.status(400).json({
+        error: `Patient ID '${patientId}' already exists. Please use a new ID.`,
+      });
     }
 
     const sqlInsert = "INSERT INTO bundles (patient_id, bundle) VALUES (?, ?)";
